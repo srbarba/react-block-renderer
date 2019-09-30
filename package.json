@@ -1,0 +1,40 @@
+{
+  "name": "react-block",
+  "version": "1.0.0",
+  "description": "React library to dynamically load components",
+  "main": "index.ts",
+  "private": true,
+  "keywords": [
+    "react",
+    "block",
+    "dynamic",
+    "component",
+    "json"
+  ],
+  "author": "Juan Pedro Barba Soler",
+  "license": "ISC",
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
+  },
+  "dependencies": {
+    "csstype": "^2.6.6",
+    "prop-types": "^15.7.2",
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
+    "typestyle": "^2.0.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.16",
+    "@types/node": "^12.6.9",
+    "@types/react": "16.8.23",
+    "@types/react-dom": "16.8.5",
+    "react-scripts-ts": "latest",
+    "typescript": "3.x.x",
+    "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-react": "^4.0.0"
+  }
+}
