@@ -16,7 +16,6 @@
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "noEmit": true,
-        "member-access": [true, "no-public"],
         "noFallthroughCasesInSwitch": true,
         "noUnusedParameters": true,
         "noImplicitReturns": true,
