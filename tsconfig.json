@@ -1,10 +1,10 @@
 {
     "compilerOptions": {
         "target": "es5",
+        "outDir": "./build",
         "lib": [
             "dom",
-            "dom.iterable",
-            "esnext"
+            "es6"
         ],
         "allowJs": true,
         "skipLibCheck": true,
@@ -16,15 +16,21 @@
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "noEmit": true,
-        "jsx": "preserve"
+        "member-access": [true, "no-public"],
+        "noFallthroughCasesInSwitch": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "noImplicitAny": true,
+        "jsx": "react"
     },
     "include": [
-        "src", "src/tests"
+        "src/**/*",
+        "tests/**/*"
     ],
     "exclude": [
         "node_modules",
-        "build",
-        "scripts"
+        "build"
     ]
 }
   

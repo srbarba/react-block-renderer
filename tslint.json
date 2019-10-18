@@ -4,11 +4,12 @@
         "ordered-imports": false,
         "object-literal-sort-keys": false,
         "no-debugger": false,
-        "no-console": false
+        "no-console": false,
+        "interface-name": [true, "never-prefix"]
     },
     "linterOptions": {
         "exclude": [
-        "node_modules/**/*.ts",
+        "node_modules",
         "coverage/lcov-report/*.js"
         ]
     }

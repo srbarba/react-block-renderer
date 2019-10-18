@@ -2,5 +2,13 @@
     "extends": "./tsconfig.json",
     "compilerOptions": {
         "module": "commonjs"
-    }
+    },
+    "include": [
+        "tests/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "build",
+        "src"
+    ]
 }
