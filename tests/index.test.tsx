@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { Block, BlockTypes } from '../src';
+import { ShallowWrapper } from 'enzyme';
+import { shallow } from '../enzyme';
+import { Block, BlockProps, BlockTypes } from '../src';
 
 class ClassComponent extends Component {
     render() {
         const {children, ...props} = this.props;
-
         return (React.createElement("div", props, children));
     }
 }
@@ -19,45 +19,44 @@ const FunctionComponent = (blockProps: any): JSX.Element => {
 BlockTypes.getInstance().setTypes({ClassComponent, FunctionComponent});
 
 describe('Block component', () => {
-    it('renders a div with text content', () => {
-        const container = document.createElement('div');
-        const content = {
+    let content: BlockProps;
+
+    beforeEach(() => {
+        content = {
             id: "1",
             type: "div",
-            content: "Test"
+            content: "Text content type"
         }
-        ReactDOM.render(<Block {...content} />, container);
+    });
 
-        expect(container.textContent).toMatch('Test');
-        expect(container.children[0].localName).toMatch('div');
-        expect(container.children[0].id).toMatch('1');
+    it('renders a div with text content', () => {
+        content.type = "div";
+
+        const result = renderBlock(content);
+
+        expect(result.contains("Text content type")).toBeTruthy();
+        expect(result.getElement().props.id).toEqual("1");
+        expect(result.getElements().length).toEqual(1);
+        expect(result.getElement().type).toEqual("div");
     });
 
     it('renders a class component', () => {
-        const container = document.createElement('div');
-        const content = {
-            id: "1",
-            type: "ClassComponent",
-            content: "Test"
-        }
-        ReactDOM.render(<Block {...content} />, container);
+        content.type = "ClassComponent";
 
-        expect(container.textContent).toMatch('Test');
-        expect(container.children[0].localName).toMatch('div');
-        expect(container.children[0].id).toMatch('1');
+        const result = renderBlock(content);
+
+        expect(result.name()).toEqual("ClassComponent");
     });
 
     it('renders a function component', () => {
-        const container = document.createElement('div');
-        const content = {
-            id: "1",
-            type: "FunctionComponent",
-            content: "Test"
-        }
-        ReactDOM.render(<Block {...content} />, container);
+        content.type = "FunctionComponent";
 
-        expect(container.textContent).toMatch('Test');
-        expect(container.children[0].localName).toMatch('div');
-        expect(container.children[0].id).toMatch('1');
+        const result = renderBlock(content);
+
+        expect(result.name()).toEqual("FunctionComponent");
     });
 });
+
+const renderBlock = (blockContent: BlockProps): ShallowWrapper => {
+    return shallow(<Block {...blockContent} />);
+}
