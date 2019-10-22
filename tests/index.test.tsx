@@ -1,19 +1,8 @@
-import React, { Component } from 'react';
-import { ShallowWrapper } from 'enzyme';
-import { shallow } from '../enzyme';
+import React from 'react';
+import { ShallowWrapper, ReactWrapper } from 'enzyme';
+import { shallow, mount } from '../enzyme';
+import { ClassComponent, FunctionComponent } from './mock';
 import { Block, BlockProps, BlockTypes } from '../src';
-
-class ClassComponent extends Component {
-    render() {
-        const {children, ...props} = this.props;
-        return (React.createElement("div", props, children));
-    }
-}
-
-const FunctionComponent = (blockProps: any): JSX.Element => {
-    const {children, ...props} = blockProps;
-    return React.createElement("div", props, children);
-}
 
 // Declare types
 BlockTypes.getInstance().setTypes({ClassComponent, FunctionComponent});
@@ -32,7 +21,7 @@ describe('Block component', () => {
     it('renders a div with text content', () => {
         content.type = "div";
 
-        const result = renderBlock(content);
+        const result = shallowBlock(content);
 
         expect(result.contains("Text content type")).toBeTruthy();
         expect(result.getElement().props.id).toEqual("1");
@@ -43,7 +32,7 @@ describe('Block component', () => {
     it('renders a class component', () => {
         content.type = "ClassComponent";
 
-        const result = renderBlock(content);
+        const result = shallowBlock(content);
 
         expect(result.name()).toEqual("ClassComponent");
     });
@@ -51,12 +40,16 @@ describe('Block component', () => {
     it('renders a function component', () => {
         content.type = "FunctionComponent";
 
-        const result = renderBlock(content);
+        const result = mountBlock(content);
 
-        expect(result.name()).toEqual("FunctionComponent");
+        expect(result.getElement().props.type).toEqual("FunctionComponent");
     });
 });
 
-const renderBlock = (blockContent: BlockProps): ShallowWrapper => {
+const shallowBlock = (blockContent: BlockProps): ShallowWrapper => {
     return shallow(<Block {...blockContent} />);
+}
+
+const mountBlock = (blockContent: BlockProps): ReactWrapper => {
+    return mount(<Block {...blockContent} />);
 }
