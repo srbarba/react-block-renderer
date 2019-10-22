@@ -18,31 +18,44 @@ describe('Block component', () => {
     };
   });
 
-  it('renders a div with text content', () => {
-    content.type = 'div';
+  describe('renders', () => {
+    it('a div with text content', () => {
+      content.type = 'div';
 
-    const result = shallowBlock(content);
+      const result = shallowBlock(content);
 
-    expect(result.contains('Text content type')).toBeTruthy();
-    expect(result.getElement().props.id).toEqual('1');
-    expect(result.getElements().length).toEqual(1);
-    expect(result.getElement().type).toEqual('div');
+      expect(result.contains('Text content type')).toBeTruthy();
+      expect(result.getElement().props.id).toEqual('1');
+      expect(result.getElements().length).toEqual(1);
+      expect(result.getElement().type).toEqual('div');
+    });
+
+    it('a class component', () => {
+      content.type = 'ClassComponent';
+
+      const result = shallowBlock(content);
+
+      expect(result.name()).toEqual('ClassComponent');
+    });
+
+    it('a function component', () => {
+      content.type = 'FunctionComponent';
+
+      const result = mountBlock(content);
+
+      expect(result.getElement().props.type).toEqual('FunctionComponent');
+    });
   });
 
-  it('renders a class component', () => {
-    content.type = 'ClassComponent';
-
-    const result = shallowBlock(content);
-
-    expect(result.name()).toEqual('ClassComponent');
-  });
-
-  it('renders a function component', () => {
-    content.type = 'FunctionComponent';
-
-    const result = mountBlock(content);
-
-    expect(result.getElement().props.type).toEqual('FunctionComponent');
+  describe('throws', () => {
+    it('InvalidBlockTypeError on invalid tag', () => {
+      try {
+        content.type = 'invalid';
+        shallowBlock(content);
+      } catch (e) {
+        expect(e.message).toEqual('Invalid block type invalid. With ID: 1');
+      }
+    });
   });
 });
 

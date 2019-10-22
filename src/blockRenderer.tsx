@@ -1,6 +1,14 @@
 import React, { FunctionComponent, ComponentClass } from 'react';
 import { types } from 'typestyle';
 import { BlockTypes, BlockType } from './blockTypes';
+import vaildHTMLTag from './validateHTMLTag';
+
+export class InvalidBlockTypeError extends Error {
+  constructor(type?: string, id?: string) {
+    super(`Invalid block type ${type}. With ID: ${id}`);
+    Object.setPrototypeOf(this, new.target.prototype);
+  }
+}
 
 export interface BlockProps {
   id: string;
@@ -16,15 +24,22 @@ export const Block = (properties: BlockProps): JSX.Element => {
   const blockTypes: BlockType = BlockTypes.getInstance().getTypes();
 
   const getBlockType = (
-    type: string
+    type: string,
+    blockProps: BlockProps
   ): string | FunctionComponent | ComponentClass => {
-    return (typeof blockTypes[type] === 'function' && blockTypes[type]) || type;
+    const blockType = blockTypes[type] || vaildHTMLTag(type) || null;
+
+    if (!blockType) {
+      throw new InvalidBlockTypeError(type, blockProps.id);
+    }
+
+    return blockType;
   };
 
   const renderBlock = (blockProps: BlockProps): JSX.Element => {
     const { type, content, ...props } = blockProps;
 
-    return React.createElement(getBlockType(type), props, content);
+    return React.createElement(getBlockType(type, blockProps), props, content);
   };
 
   return renderBlock(properties);
