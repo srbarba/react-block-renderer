@@ -1,4 +1,4 @@
-import { Block, BlockProps} from './blockRenderer';
+import { Block, BlockProps } from './blockRenderer';
 import { BlockType, BlockTypes } from './blockTypes';
 
 export {
