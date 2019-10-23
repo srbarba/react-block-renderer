@@ -13,8 +13,8 @@ export class InvalidBlockTypeError extends Error {
 export interface BlockProps {
   id: string;
   type: string;
+  content: string | BlockProps[];
   key?: string | number;
-  content?: string | BlockProps[];
   className?: string;
   properties?: { [key: string]: string };
   styles?: types.NestedCSSProperties | types.NestedCSSProperties[];
@@ -36,10 +36,23 @@ export const Block = (properties: BlockProps): JSX.Element => {
     return blockType;
   };
 
+  const prepareContent = (
+    content: string | BlockProps[]
+  ): string | JSX.Element[] => {
+    return !(content instanceof Array)
+      ? content
+      : content.reduce(
+          (result: JSX.Element[], blockProps: BlockProps, keyValue: number) =>
+            result.concat(renderBlock({ key: keyValue, ...blockProps })),
+          []
+        );
+  };
+
   const renderBlock = (blockProps: BlockProps): JSX.Element => {
     const { type, content, ...props } = blockProps;
+    const blockType = getBlockType(type, blockProps);
 
-    return React.createElement(getBlockType(type, blockProps), props, content);
+    return React.createElement(blockType, props, prepareContent(content));
   };
 
   return renderBlock(properties);
