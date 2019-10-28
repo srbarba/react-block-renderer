@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ComponentClass } from 'react';
-import { types } from 'typestyle';
+import { style, classes, types } from 'typestyle';
 import { BlockTypes, BlockType } from './blockTypes';
 import vaildHTMLTag from './validateHTMLTag';
 
@@ -10,17 +10,24 @@ export class InvalidBlockTypeError extends Error {
   }
 }
 
-export interface BlockProps {
+export interface Property {
+  [key: string]: (() => any) | string | number | Property | Property[] 
+}
+
+export interface BasicBlockProps {
   id: string;
-  type: string;
-  content: string | BlockProps[];
   key?: string | number;
   className?: string;
-  properties?: { [key: string]: string };
+  properties?: Property;
   styles?: types.NestedCSSProperties | types.NestedCSSProperties[];
 }
 
-export const Block = (properties: BlockProps): JSX.Element => {
+export interface BlockProps extends BasicBlockProps {
+  type: string;
+  content: string | BlockProps[];
+}
+
+export const Block = (blockProperties: BlockProps): JSX.Element => {
   const blockTypes: BlockType = BlockTypes.getInstance().getTypes();
 
   const getBlockType = (
@@ -34,6 +41,21 @@ export const Block = (properties: BlockProps): JSX.Element => {
     }
 
     return blockType;
+  };
+
+  const prepareStyles = (
+    styles: types.NestedCSSProperties | types.NestedCSSProperties[]
+  ): string => {
+    return styles instanceof Array ? style(...styles) : style(styles);
+  };
+
+  const prepareProps = (blockProps: BasicBlockProps): BasicBlockProps => {
+    const { className, styles, properties, ...props } = blockProps;
+    const blockClasses = styles
+      ? classes(prepareStyles(styles), className)
+      : className;
+
+    return { className: blockClasses, ...properties, ...props };
   };
 
   const prepareContent = (
@@ -52,8 +74,12 @@ export const Block = (properties: BlockProps): JSX.Element => {
     const { type, content, ...props } = blockProps;
     const blockType = getBlockType(type, blockProps);
 
-    return React.createElement(blockType, props, prepareContent(content));
+    return React.createElement(
+      blockType,
+      prepareProps(props),
+      prepareContent(content)
+    );
   };
 
-  return renderBlock(properties);
+  return renderBlock(blockProperties);
 };

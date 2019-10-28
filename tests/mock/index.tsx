@@ -8,6 +8,6 @@ export class ClassComponent extends Component {
 }
 
 export const FunctionComponent = (blockProps: any): JSX.Element => {
-  const { children, ...props } = blockProps;
+  const { children, "function-prop": functionProp, ...props } = blockProps;
   return React.createElement('div', props, children);
 };
