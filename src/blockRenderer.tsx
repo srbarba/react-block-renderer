@@ -1,14 +1,8 @@
 import React, { FunctionComponent, ComponentClass } from 'react';
 import { style, classes, types } from 'typestyle';
 import { BlockTypes, BlockType } from './blockTypes';
+import { InvalidBlockTypeError } from './invalidBlockTypeError';
 import vaildHTMLTag from './validateHTMLTag';
-
-export class InvalidBlockTypeError extends Error {
-  constructor(type?: string, id?: string) {
-    super(`Invalid block type ${type}. With ID: ${id}`);
-    Object.setPrototypeOf(this, new.target.prototype);
-  }
-}
 
 export interface Property {
   [key: string]: (() => any) | string | number | Property | Property[] 
@@ -37,7 +31,7 @@ export const Block = (blockProperties: BlockProps): JSX.Element => {
     const blockType = blockTypes[type] || vaildHTMLTag(type) || null;
 
     if (!blockType) {
-      throw new InvalidBlockTypeError(type, blockProps.id);
+      throw new InvalidBlockTypeError(`Invalid block type ${type}. With ID: ${blockProps.id}`);
     }
 
     return blockType;

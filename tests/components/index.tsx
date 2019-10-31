@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-export class ClassComponent extends Component {
+export class ClassComponent extends Component<any> {
   render() {
-    const { children, ...props } = this.props;
+    const { children, "function-prop": functionProp, ...props } = this.props;
     return React.createElement('div', props, children);
   }
 }

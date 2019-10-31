@@ -1,8 +1,8 @@
 import React from 'react';
 import { ShallowWrapper, ReactWrapper } from 'enzyme';
 import { shallow, mount, render } from '../enzyme';
-import { ClassComponent, FunctionComponent } from './mock';
-import { Block, BlockProps, BlockTypes } from '../src';
+import { ClassComponent, FunctionComponent } from './components';
+import { Block, BlockProps, BlockTypes, Property, InvalidBlockTypeError } from '../src';
 
 describe('Block component', () => {
   let props: BlockProps;
@@ -17,142 +17,202 @@ describe('Block component', () => {
   });
 
   describe('renders', () => {
-    it('a div with text content', () => {
-      props.type = 'div';
+    const itWithTextContent = () => {
+      it('with text content', () => {
+        const result = mountBlock(props);
 
-      const result = shallowBlock(props);
+        expect(result.contains('Text content')).toBeTruthy();
+        expect(result.getElement().props.id).toEqual('1');
+        expect(result.getElements().length).toEqual(1);
+        expect(result.getElement().props.type).toEqual(props.type);
+      });
+    };
 
-      expect(result.contains('Text content')).toBeTruthy();
-      expect(result.getElement().props.id).toEqual('1');
-      expect(result.getElements().length).toEqual(1);
-      expect(result.getElement().type).toEqual('div');
+    const itWithOneChildLevel = () => {
+      it('with one child level', () => {
+        props.content = [
+          {
+            id: '2',
+            type: 'div',
+            content: 'Text content child'
+          }
+        ];
+
+        const result = renderBlock(props);
+
+        expect(result.children().length).toBeGreaterThan(0);
+        expect(result.children().attr().id).toEqual('2');
+      });
+    };
+
+    const itWithMultipleChilds = () => {
+      it('with multiple childs', () => {
+        props.content = [
+          {
+            id: '2',
+            type: 'div',
+            content: 'Text content child'
+          },
+          {
+            id: '3',
+            type: 'div',
+            content: 'Text content child'
+          }
+        ];
+
+        const result = renderBlock(props);
+
+        expect(result.children().length).toEqual(2);
+        expect(result.children()[0].attribs.id).toEqual('2');
+        expect(result.children()[1].attribs.id).toEqual('3');
+      });
+    };
+
+    const itWithMoreThanOneChildLevel = () => {
+      it('with more than one child level', () => {
+        props.content = [
+          {
+            id: '2',
+            type: 'div',
+            content: [
+              {
+                id: '3',
+                type: 'div',
+                content: 'Text content child'
+              }
+            ]
+          }
+        ];
+
+        const result = renderBlock(props);
+
+        expect(result.children().attr().id).toEqual('2');
+        expect(
+          result
+            .children()
+            .children()
+            .attr().id
+        ).toEqual('3');
+      });
+    };
+
+    const itWithClassName = () => {
+      it('with className', () => {
+        props.className = 'customClassName';
+
+        const result = shallowBlock(props);
+
+        expect(result.getElement().props.className).toEqual('customClassName');
+      });
+    };
+
+    const itWithCustomStylesObject = () => {
+      it('with custom styles object', () => {
+        props.styles = { opacity: 0 };
+
+        const result = mountBlock(props);
+
+        expect(result.find('div').get(0).props.className).toBeDefined();
+        expect(result.getElement().props.styles.opacity).toEqual(0);
+      });
+    };
+
+    const itWithCustomStylesArray = () => {
+      it('with custom styles array', () => {
+        props.styles = [{ opacity: 0 }, { display: 'inline' }];
+
+        const result = mountBlock(props);
+
+        expect(result.find('div').get(0).props.className).toBeDefined();
+        expect(result.getElement().props.styles[0].opacity).toEqual(0);
+        expect(result.getElement().props.styles[1].display).toEqual('inline');
+      });
+    };
+
+    const expectToHavePropertiesWithValues = (
+      elementProps: Property,
+      properties: Property
+    ) => {
+      Object.keys(properties).forEach(key => {
+        expect(elementProps).toHaveProperty(key);
+        expect(elementProps[key]).toEqual(properties[key]);
+      });
+    };
+
+    const itWithCustomProperties = () => {
+      it('with custom properties', () => {
+        props.properties = {
+          'string-prop': 'value',
+          'number-prop': 1,
+          'object-prop': {
+            property: 'value'
+          },
+          'array-prop': [{ property: 'value' }]
+        };
+
+        const result = mountBlock(props);
+
+        expect(result.getElement().props).toHaveProperty('properties');
+        expectToHavePropertiesWithValues(
+          result.getElement().props.properties,
+          props.properties
+        );
+      });
+    };
+
+    const itWithFunctionProperty = () => {
+      it('with custom properties', () => {
+        props.properties = { 'function-prop': () => null };
+
+        const result = mountBlock(props);
+
+        expect(result.getElement().props).toHaveProperty('properties');
+        expectToHavePropertiesWithValues(
+          result.getElement().props.properties,
+          props.properties
+        );
+      });
+    };
+
+    describe('div component', () => {
+      beforeEach(() => (props.type = 'div'));
+
+      itWithTextContent();
+      itWithOneChildLevel();
+      itWithMultipleChilds();
+      itWithMoreThanOneChildLevel();
+      itWithClassName();
+      itWithCustomStylesObject();
+      itWithCustomStylesArray();
+      itWithCustomProperties();
     });
 
-    it('a class component', () => {
-      props.type = 'ClassComponent';
+    describe('ClassComponent component', () => {
+      beforeEach(() => (props.type = 'ClassComponent'));
 
-      const result = mountBlock(props);
-
-      expect(result.getElement().props.type).toEqual('ClassComponent');
+      itWithTextContent();
+      itWithOneChildLevel();
+      itWithMultipleChilds();
+      itWithMoreThanOneChildLevel();
+      itWithClassName();
+      itWithCustomStylesObject();
+      itWithCustomStylesArray();
+      itWithCustomProperties();
+      itWithFunctionProperty();
     });
 
-    it('a function component', () => {
-      props.type = 'FunctionComponent';
+    describe('FunctionComponent component', () => {
+      beforeEach(() => (props.type = 'FunctionComponent'));
 
-      const result = mountBlock(props);
-
-      expect(result.getElement().props.type).toEqual('FunctionComponent');
-    });
-
-    it('a div with one child level', () => {
-      props.content = [{
-        id: '2',
-        type: 'div',
-        content: 'Text content child'
-      }];
-
-      const result = renderBlock(props);
-
-      expect(result.children().attr().id).toEqual('2');
-    });
-
-    it('a div with multiple child', () => {
-      props.content = [
-        {
-          id: '2',
-          type: 'div',
-          content: 'Text content child'
-        },
-        {
-          id: '3',
-          type: 'div',
-          content: 'Text content child'
-        }
-      ];
-
-      const result = renderBlock(props);
-
-      expect(result.children().length).toEqual(2);
-      expect(result.children()[0].attribs.id).toEqual('2');
-      expect(result.children()[1].attribs.id).toEqual('3');
-    });
-
-    it('a div with more than one child level', () => {
-      props.content = [{
-        id: '2',
-        type: 'div',
-        content: [{
-          id: '3',
-          type: 'div',
-          content: 'Text content child'
-        }]
-      }];
-
-      const result = renderBlock(props);
-
-      expect(result.children().attr().id).toEqual('2');
-      expect(result.children().children().attr().id).toEqual('3');
-    });
-
-    it('a div with className', () => {
-      props.className = 'customClassName';
-
-      const result = shallowBlock(props);
-      
-      expect(result.getElement().props.className).toEqual('customClassName');
-    });
-
-    it('a div with custom styles object', () => {
-      props.styles = {opacity: 0};
-
-      const result = mountBlock(props);
-
-      expect(result.find("div").get(0).props.className).toBeDefined();
-      expect(result.getElement().props.styles.opacity).toEqual(0);
-    });
-
-    it('a div with custom styles array', () => {
-      props.styles = [
-        {opacity: 0},
-        {display: 'inline'}
-      ];
-
-      const result = mountBlock(props);
-
-      expect(result.find("div").get(0).props.className).toBeDefined();
-      expect(result.getElement().props.styles[0].opacity).toEqual(0);
-      expect(result.getElement().props.styles[1].display).toEqual('inline');
-    });
-
-    it('a component with custom properties', () => {
-      const functionProp = () => null;
-
-      props.type = 'FunctionComponent';
-      props.properties = {
-        "string-prop": "value",
-        "number-prop": 1,
-        "object-prop": {
-          property: "value"
-        },
-        "array-prop": [
-          {property: "value"}
-        ],
-        "function-prop": functionProp
-      };
-
-      const result = mountBlock(props);
-
-      expect(result.getElement().props).toHaveProperty("properties");
-      expect(result.getElement().props.properties).toHaveProperty("string-prop");
-      expect(result.getElement().props.properties["string-prop"]).toEqual("value");
-      expect(result.getElement().props.properties).toHaveProperty("number-prop");
-      expect(result.getElement().props.properties["number-prop"]).toEqual(1);
-      expect(result.getElement().props.properties).toHaveProperty("object-prop");
-      expect(result.getElement().props.properties["object-prop"]).toEqual({property: "value"});
-      expect(result.getElement().props.properties).toHaveProperty("array-prop");
-      expect(result.getElement().props.properties["array-prop"]).toEqual([{property: "value"}]);
-      expect(result.getElement().props.properties).toHaveProperty("function-prop");
-      expect(result.getElement().props.properties["function-prop"]).toEqual(functionProp);
+      itWithTextContent();
+      itWithOneChildLevel();
+      itWithMultipleChilds();
+      itWithMoreThanOneChildLevel();
+      itWithClassName();
+      itWithCustomStylesObject();
+      itWithCustomStylesArray();
+      itWithCustomProperties();
+      itWithFunctionProperty();
     });
   });
 
@@ -161,8 +221,9 @@ describe('Block component', () => {
       try {
         props.type = 'invalid';
         shallowBlock(props);
-      } catch (e) {
-        expect(e.message).toEqual('Invalid block type invalid. With ID: 1');
+      } catch (error) {
+        expect(error).toBeInstanceOf(InvalidBlockTypeError);
+        expect(error.message).toEqual('Invalid block type invalid. With ID: 1');
       }
     });
   });
