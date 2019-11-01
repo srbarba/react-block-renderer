@@ -2,7 +2,13 @@ import React from 'react';
 import { ShallowWrapper, ReactWrapper } from 'enzyme';
 import { shallow, mount, render } from '../enzyme';
 import { ClassComponent, FunctionComponent } from './components';
-import { Block, BlockProps, BlockTypes, Property, InvalidBlockTypeError } from '../src';
+import {
+  Block,
+  BlockProps,
+  BlockTypes,
+  Property,
+  InvalidBlockTypeError
+} from '../src';
 
 describe('Block component', () => {
   let props: BlockProps;

@@ -5,7 +5,7 @@ import { InvalidBlockTypeError } from './invalidBlockTypeError';
 import vaildHTMLTag from './validateHTMLTag';
 
 export interface Property {
-  [key: string]: (() => any) | string | number | Property | Property[] 
+  [key: string]: (() => any) | string | number | Property | Property[];
 }
 
 export interface BasicBlockProps {
@@ -31,7 +31,9 @@ export const Block = (blockProperties: BlockProps): JSX.Element => {
     const blockType = blockTypes[type] || vaildHTMLTag(type) || null;
 
     if (!blockType) {
-      throw new InvalidBlockTypeError(`Invalid block type ${type}. With ID: ${blockProps.id}`);
+      throw new InvalidBlockTypeError(
+        `Invalid block type ${type}. With ID: ${blockProps.id}`
+      );
     }
 
     return blockType;

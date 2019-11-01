@@ -7,8 +7,4 @@ export type Property = Property;
 export type BasicBlockProps = BasicBlockProps;
 export type BlockType = BlockType;
 
-export {
-  Block,
-  InvalidBlockTypeError,
-  BlockTypes
-};
+export { Block, InvalidBlockTypeError, BlockTypes };
