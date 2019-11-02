@@ -12,6 +12,10 @@
   ],
   "author": "Juan Pedro Barba Soler",
   "license": "MIT",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/srbarba/react-block-renderer.git"
+  },
   "scripts": {
     "build": "webpack --progress --colors --mode=production",
     "test": "node build && jest",
