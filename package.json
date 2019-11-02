@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "React library to render dynamically components",
   "main": "index.tsx",
-  "private": true,
   "keywords": [
     "react",
     "block",
