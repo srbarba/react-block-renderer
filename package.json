@@ -1,7 +1,7 @@
 {
-  "name": "react-block",
+  "name": "react-block-renderer",
   "version": "1.0.0",
-  "description": "React library to dynamically load components",
+  "description": "React library to render dynamically components",
   "main": "index.tsx",
   "private": true,
   "keywords": [
@@ -12,7 +12,7 @@
     "json"
   ],
   "author": "Juan Pedro Barba Soler",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "build": "webpack --progress --colors --mode=production",
     "test": "node build && jest",
