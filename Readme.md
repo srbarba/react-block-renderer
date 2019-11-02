@@ -1,64 +1,70 @@
-# React Block
+# React Block Renderer
 
 Dynamic React component renderer.
 
-// Getting started
-// Installation
-// Usage
-// Running tests
-// Contribute
-// License
-
 ## Overview
 
-**React Block** These instructions xx.
+**React Block Renderer** helps you to render React components dynamically from a json object.
 
 ### Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Install `react-block-renderer`
 
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
+```shell
+npm install react-block-renderer --save
 ```
 
-And repeat
+### How to use
 
+**React Block Renderer** has a single component `Block` which expect to get a list of properties.
+| Property | Description | Value | Required |
+| --- | --- | --- | --- |
+| id | identifier of the rendered block | string | :heavy_check_mark:
+| type | HTML tag or component name | string | :heavy_check_mark:
+| content | content to be rendered. Here you can nest multiple blocks passing an array with this properties structure. | string \| [BlockProps[]]() | :heavy_check_mark:
+| properties | custom properties required for the component to be rendered | object |
+| key | used when you work with list of elements into a loop | string \| number |
+| className | custom class name for the component to be rendered | string |
+| styles | custom styles for the component to be rendered | [NestedCSSProperties[]](https://github.com/typestyle/typestyle/blob/f8cd6a01ab005efc638937615b87cbe9e562c8dd/src/types.ts#L29) |
+
+So you just need something like this:
 ```
-until finished
+// declare the properties for the block
+const blockProps = {
+  id: "1"
+  type: "div"
+  content: "Text content"
+}
+
+// pass the properties to a Block tag
+<Block {...blockProps} />
+
+// this will result in something like
+<div id="1">Text content</div>
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+A more complete example can be found in [demo.html]() (in construction)
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+You can run the tests with command:
 
-## Built With
+```
+npm run test
+```
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+If you want to execute the coverage you can execute:
 
-## Contributing
+```
+npm run test:cov
+```
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+### Dependencies
 
-## Versioning
+**React Block Renderer** has two peer dependencies that you should install in your project: react, react-dom. NPM will not install it automatically but it will show you a warning message with instructions on how to install them.
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+We use **[typestyle](https://github.com/typestyle/typestyle)** library to work with custom dynamic styles. Please, check the **[documentation]()** to know more about how this library works.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
