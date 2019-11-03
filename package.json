@@ -2,7 +2,7 @@
   "name": "react-block-renderer",
   "version": "1.0.3",
   "description": "React library to render dynamically components",
-  "main": "./src/index.tsx",
+  "main": "./build/index.js",
   "keywords": [
     "react",
     "block",
