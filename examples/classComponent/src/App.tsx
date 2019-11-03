@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Block } from 'react-block-renderer';
+import { Block, BlockTypes } from 'react-block-renderer';
 import './App.css';
 
 // Create a React class component
