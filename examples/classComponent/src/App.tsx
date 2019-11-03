@@ -1,4 +1,4 @@
-import { React, Component } from 'react';
+import React, { Component } from 'react';
 import { Block } from 'react-block-renderer';
 import './App.css';
 
@@ -23,7 +23,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <div className="App-content">
-        <!-- Add the Block tag and pass the block properties -->
+        {/* <!-- Add the Block tag and pass the block properties --> */}
         <Block {...blockProps} />
       </div>
     </div>
