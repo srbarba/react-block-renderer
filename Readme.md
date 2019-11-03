@@ -73,7 +73,59 @@ const blockProps = {
 <div id="1">Text content</div>
 ```
 
-A more complete example can be found in [demo.html]() (in construction)
+## Working with styles
+
+With this library you will be able to work styles of your components dynamically. We use **[typestyle](https://github.com/typestyle/typestyle)** to work with styles.
+
+You can pass an object or an array of objects with the styles values. Something like:
+
+```
+styles: {
+  color: "green",
+  fontSize: "12px"
+}
+
+// or you can use an array of objects
+
+styles: [
+  {color: "green"},
+  {fontSize: "12px"}
+]
+```
+
+You can nest the styles:
+```
+styles: {
+  color: "green",
+  $nest: {
+    '&:hover': {
+      color: 'red'
+    }
+  }
+}
+```
+
+You can use media queries working with nest styles:
+```
+styles: {
+  color: "green",
+  $nest: {
+    '@media screen and (-webkit-min-device-pixel-ratio: 0)': {
+      color: 'red'
+    }
+  }
+}
+```
+
+You can use camel case or quoted strings for the property names:
+```
+styles: {
+  fontSize: "12px",
+  "text-color": "white"
+}
+```
+
+For more info you can check at **[typestyle](https://github.com/typestyle/typestyle)** documentation.
 
 ## Running the tests
 
