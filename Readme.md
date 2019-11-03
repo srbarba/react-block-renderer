@@ -73,7 +73,7 @@ const blockProps = {
 <div id="1">Text content</div>
 ```
 
-## Working with styles
+### Working with styles
 
 With this library you will be able to work styles of your components dynamically. We use **[typestyle](https://github.com/typestyle/typestyle)** to work with styles.
 
