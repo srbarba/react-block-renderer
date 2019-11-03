@@ -1,12 +1,12 @@
 {
     "compilerOptions": {
         "target": "es5",
+        "declaration": true,
         "outDir": "./build",
         "lib": [
             "dom",
             "es6"
         ],
-        "allowJs": true,
         "skipLibCheck": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
@@ -15,7 +15,6 @@
         "module": "esnext",
         "moduleResolution": "node",
         "resolveJsonModule": true,
-        "noEmit": true,
         "noFallthroughCasesInSwitch": true,
         "noUnusedParameters": true,
         "noImplicitReturns": true,
