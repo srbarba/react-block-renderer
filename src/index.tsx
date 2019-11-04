@@ -1,11 +1,11 @@
 import {
-  Block,
-  BlockProps,
+  InvalidBlockTypeError,
+  BlockTypes,
+  BlockType,
   Property,
   BasicBlockProps,
-  InvalidBlockTypeError,
-  BlockType,
-  BlockTypes
+  Block,
+  BlockProps
 } from './blockRenderer';
 
 export type BlockProps = BlockProps;
@@ -13,4 +13,4 @@ export type Property = Property;
 export type BasicBlockProps = BasicBlockProps;
 export type BlockType = BlockType;
 
-export { Block, InvalidBlockTypeError, BlockTypes };
+export { InvalidBlockTypeError, BlockTypes, Block };
