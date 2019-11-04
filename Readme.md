@@ -19,9 +19,9 @@ npm install react-block-renderer --save
 **React Block Renderer** has a component `Block` which expect to get a list of properties.
 | Property | Description | Value | Required |
 | --- | --- | --- | --- |
-| id | identifier of the rendered block | string | :heavy_check_mark:
-| type | HTML tag or component name | string | :heavy_check_mark:
-| content | content to be rendered. Here you can nest multiple blocks passing an array with this properties structure. | string \| [BlockProps[]](https://github.com/srbarba/react-block-renderer/blob/e8437b2218ead2c93ba53a668fb484423cfb7023/src/blockRenderer.tsx#L19) | :heavy_check_mark:
+| id | identifier of the rendered block | string | :heavy_check_mark: |
+| type | HTML tag or component name | string | :heavy_check_mark: |
+| content | content to be rendered. Here you can nest multiple blocks passing an array with this properties structure. | string \| [BlockProps[]](https://github.com/srbarba/react-block-renderer/blob/e8437b2218ead2c93ba53a668fb484423cfb7023/src/blockRenderer.tsx#L19) | :heavy_check_mark: |
 | properties | custom properties required for the component to be rendered | object |
 | key | used when you work with list of elements into a loop | string \| number |
 | className | custom class name for the component to be rendered | string |
