@@ -20,9 +20,9 @@
   "scripts": {
     "build": "webpack --progress --colors --mode=production",
     "build:types": "tsc --emitDeclarationOnly",
-    "test": "node build && jest",
-    "test:watch": "node build && jest --watch",
-    "test:cov": "node build && jest --coverage",
+    "test": "npm run build && jest",
+    "test:watch": "npm run build && jest --watch",
+    "test:cov": "npm run build && jest --coverage",
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
     "prettier:base": "prettier",
