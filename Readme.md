@@ -17,15 +17,16 @@ npm install react-block-renderer --save
 ### How to use
 
 **React Block Renderer** has a component `Block` which expect to get a list of properties.
-| Property | Description | Value | Required
-| --- | --- | --- | ---
-| id | identifier of the rendered block | string | :heavy_check_mark:
-| type | HTML tag or component name | string | :heavy_check_mark:
-| content | content to be rendered. Here you can nest multiple blocks passing an array with this properties structure. | string \| [BlockProps[]](https://github.com/srbarba/react-block-renderer/blob/e8437b2218ead2c93ba53a668fb484423cfb7023/src/blockRenderer.tsx#L19) | :heavy_check_mark:
+
+| Property   | Description | Value | Required |
+| ---------- | ------------- | :-------------: | :-------------: |
+| id         | identifier of the rendered block | string | :heavy_check_mark: |
+| type       | HTML tag or component name | string | :heavy_check_mark:
+| content    | content to be rendered. Here you can nest multiple blocks passing an array with this properties structure. | string \| [BlockProps[]](https://github.com/srbarba/react-block-renderer/blob/e8437b2218ead2c93ba53a668fb484423cfb7023/src/blockRenderer.tsx#L19) | :heavy_check_mark:
 | properties | custom properties required for the component to be rendered | object
-| key | used when you work with list of elements into a loop | string \| number
-| className | custom class name for the component to be rendered | string
-| styles | custom styles for the component to be rendered | [NestedCSSProperties[]](https://github.com/typestyle/typestyle/blob/f8cd6a01ab005efc638937615b87cbe9e562c8dd/src/types.ts#L29)
+| key        | used when you work with list of elements into a loop | string \| number
+| className  | custom class name for the component to be rendered | string
+| styles     | custom styles for the component to be rendered | [NestedCSSProperties[]](https://github.com/typestyle/typestyle/blob/f8cd6a01ab005efc638937615b87cbe9e562c8dd/src/types.ts#L29)
 
 Working with HTML tags, you just need something like this:
 ```
