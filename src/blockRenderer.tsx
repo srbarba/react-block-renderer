@@ -4,6 +4,9 @@ import { BlockTypes, BlockType } from './blockTypes';
 import { InvalidBlockTypeError } from './invalidBlockTypeError';
 import vaildHTMLTag from './validateHTMLTag';
 
+export type BlockType = BlockType;
+export { BlockTypes, InvalidBlockTypeError };
+
 export interface Property {
   [key: string]: (() => any) | string | number | Property | Property[];
 }
