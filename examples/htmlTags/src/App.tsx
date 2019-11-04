@@ -12,7 +12,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <div className="App-content">
-        <!-- Add the Block tag and pass the block properties -->
+        {/* <!-- Add the Block tag and pass the block properties --> */}
         <Block {...blockProps} />
       </div>
     </div>

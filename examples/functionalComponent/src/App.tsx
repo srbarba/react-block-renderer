@@ -1,5 +1,5 @@
-import { React, Component } from 'react';
-import { Block } from 'react-block-renderer';
+import React from 'react';
+import { Block, BlockTypes } from 'react-block-renderer';
 import './App.css';
 
 // Create a React functional component
@@ -16,12 +16,12 @@ const App: React.FC = () => {
   const blockProps = {
     id: "1",
     type: "FunctionComponent",
-    content: "Function component example"
+    content: "Functional component example"
   };
   return (
     <div className="App">
       <div className="App-content">
-        <!-- Add the Block tag and pass the block properties -->
+        {/* <!-- Add the Block tag and pass the block properties --> */}
         <Block {...blockProps} />
       </div>
     </div>
